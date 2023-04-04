@@ -25,7 +25,7 @@ Here is a breakdown of the code:
   - Starting the scraping process and performing cleanup afterward.
 
 To run the script, you would use the following command:
-#Lpython <script_name>.py <initial_url> <max_depth> [--db_file <database_file>] [--max_threads <number_of_threads>]
+python <script_name>.py <initial_url> <max_depth> [--db_file <database_file>] [--max_threads <number_of_threads>]
 
 Replace <script_name> with the name of the Python file,
 <initial_url> with the URL you want to start scraping from,
@@ -72,10 +72,10 @@ Examples:
 You can use a Docker volume to store the database file outside the container, and mount it to the container when running it.
 This will allow you to reuse the same database file between different runs of the container.
 To create a Docker volume use:
-#L"docker volume create scraper_data"
+"docker volume create scraper_data"
 This will create a volume named "scraper_data" that can be used to store the database file.
 To mount the volume to the container, you can use the -v flag when running the container, like this:
-#L"docker run -v scraper_data:/app/data web_scraper https://www.google.com/ 2"
+"docker run -v scraper_data:/app/data web_scraper https://www.google.com/ 2"
 This will mount the "scraper_data" volume to the "/app/data" directory inside the container.
 You can then use "/app/data/scraper.db" as the path to the database file in your Python code.
 ! Note that the volume will persist even if you delete the container, so you can reuse the same volume between different runs of the container.
