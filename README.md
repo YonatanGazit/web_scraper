@@ -25,7 +25,7 @@ Here is a breakdown of the code:
   - Starting the scraping process and performing cleanup afterward.
 
 To run the script, you would use the following command:
-python <script_name>.py <initial_url> <max_depth> [--db_file <database_file>] [--max_threads <number_of_threads>]
+#Lpython <script_name>.py <initial_url> <max_depth> [--db_file <database_file>] [--max_threads <number_of_threads>]
 
 Replace <script_name> with the name of the Python file,
 <initial_url> with the URL you want to start scraping from,
@@ -58,3 +58,24 @@ Here's a breakdown of the steps involved in this file:
 When you build and run the Docker container, it will create an isolated environment with all the necessary dependencies to execute the web scraper.
 The advantage of using a Docker container is that you can easily deploy and run the scraper on any machine that supports Docker,
 without worrying about dependency conflicts or other issues related to the host machine's environment.
+
+To use the Docker image, you will need to install Docker on your machine (https://docs.docker.com/get-docker/)
+Then, to build the Docker image, open a terminal or command prompt in the directory where you downloaded the files
+and execute the following command for building and running the Docker image:
+1. docker build -t web_scraper .
+2. docker run web_scraper  <Initial URL> <Max Depth> [optional]<--db_file> [optional]<--max_threads>
+Examples:
+"docker run web_scraper https://www.google.com/ 2"
+"docker run web_scraper https://www.google.com/ 2 --db_file my_data_base.db --max_threads 12"
+
+
+You can use a Docker volume to store the database file outside the container, and mount it to the container when running it.
+This will allow you to reuse the same database file between different runs of the container.
+To create a Docker volume use:
+#L"docker volume create scraper_data"
+This will create a volume named "scraper_data" that can be used to store the database file.
+To mount the volume to the container, you can use the -v flag when running the container, like this:
+#L"docker run -v scraper_data:/app/data web_scraper https://www.google.com/ 2"
+This will mount the "scraper_data" volume to the "/app/data" directory inside the container.
+You can then use "/app/data/scraper.db" as the path to the database file in your Python code.
+! Note that the volume will persist even if you delete the container, so you can reuse the same volume between different runs of the container.
